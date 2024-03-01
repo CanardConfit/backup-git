@@ -1,6 +1,6 @@
 # Git Repository Backup Solution
 
-![Docker Pulls](https://img.shields.io/docker/pulls/canardconfit/backup-gi)
+![Docker Pulls](https://img.shields.io/docker/pulls/canardconfit/backup-git)
 ![GitHub Release](https://img.shields.io/github/v/release/CanardConfit/backup-git)
 ![GitHub Repo stars](https://img.shields.io/github/stars/CanardConfit/backup-git)
 
