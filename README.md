@@ -1,5 +1,9 @@
 # Git Repository Backup Solution
 
+![Docker Pulls](https://img.shields.io/docker/pulls/canardconfit/backup-git)
+![GitHub Release](https://img.shields.io/github/v/release/CanardConfit/backup-git)
+![GitHub Repo stars](https://img.shields.io/github/stars/CanardConfit/backup-git)
+
 This solution provides an automated way to back up a Git repository hosted on an Alpine Linux container. The setup involves a Docker container configured with cron jobs to perform daily backups of the specified Git repository. This README outlines the setup process, how to configure your environment, and how to use the backup solution.
 
 ## Features
@@ -17,7 +21,7 @@ This solution provides an automated way to back up a Git repository hosted on an
 
 ## Docker Compose Configuration
 
-The `docker-compose.yml` file facilitates the deployment of the backup solution and, for my personal use, the live-sync bridge service. Here's an example configuration:
+The `docker-compose.yml` file facilitates the deployment of the backup solution and, for my personal use, the https://github.com/CanardConfit/livesync-bridge service. Here's an example configuration:
 
 ```yaml
 services:
