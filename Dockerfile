@@ -11,10 +11,6 @@ RUN apk add --no-cache git rsync openssh-client dcron tzdata
 COPY backup-script.sh /backup-script.sh
 RUN chmod +x /backup-script.sh
 
-# Schedule the backup script to run daily at midnight using crontab
-# Output is redirected to /var/log/cron.log for logging
-RUN echo "0 0 * * * /backup-script.sh >> /var/log/cron.log 2>&1" > /etc/crontabs/root
-
 # Create the log file to enable log output via 'docker logs'
 RUN touch /var/log/cron.log
 
@@ -34,6 +30,13 @@ ENV GIT_REMOTE_URL=""
 # SSH_PRIVATE_KEY should contain your SSH private key for Git operations, encoded in base64.
 # This environment variable must be set externally.
 ENV SSH_PRIVATE_KEY=""
+
+# CRON_SCHEDULE defines when the backup script runs, defaulting to midnight every day.
+# Use standard cron format (e.g., "0 0 * * *" for midnight).
+ENV CRON_SCHEDULE="0 0 * * *"
+
+# Configure crontab based on CRON_SCHEDULE environment variable
+RUN echo "${CRON_SCHEDULE} /backup-script.sh >> /var/log/cron.log 2>&1" > /etc/crontabs/root
 
 # ----------
 # Entrypoint

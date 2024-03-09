@@ -8,7 +8,7 @@ This solution provides an automated way to back up a Git repository hosted on an
 
 ## Features
 
-- **Scheduled Backups**: Leverages `dcron` to schedule daily backups at midnight (located in Dockerfile).
+- **Scheduled Backups**: Leverages `dcron` to schedule daily backups at midnight by default (ENV variable `CRON_SCHEDULE`).
 - **Environment Customization**: Allows configuration of source directory, commit message template, Git remote URL, and SSH private key through environment variables.
 - **SSH Key Management**: Incorporates SSH setup for Git operations to securely connect to the remote repository.
 - **Timezone Management**: Timezone configuration within the container.
@@ -42,6 +42,7 @@ services:
       - git-volume:/git-repo/
     environment:
       TZ: Europe/Zurich
+      CRON_SCHEDULE: "0 0 * * *"
       SOURCE_FOLDER_PATH: "/obsidian/"
       COMMIT_MESSAGE_TEMPLATE: "Backup on CURRENT_DATE" # CURRENT_DATE is a placeholder
       GIT_REMOTE_URL: "<Your_remote_ssh_git_repo>"
