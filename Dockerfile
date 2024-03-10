@@ -7,9 +7,11 @@ VOLUME /git-repo/
 # openssh-client for SSH operations, dcron for scheduling tasks, and tzdata for timezone management
 RUN apk add --no-cache git rsync openssh-client dcron tzdata
 
-# Copy the backup script into the image and make it executable
+# Copy scripts into the image and make it executable
 COPY backup-script.sh /backup-script.sh
 RUN chmod +x /backup-script.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Create the log file to enable log output via 'docker logs'
 RUN touch /var/log/cron.log
@@ -35,13 +37,9 @@ ENV SSH_PRIVATE_KEY=""
 # Use standard cron format (e.g., "0 0 * * *" for midnight).
 ENV CRON_SCHEDULE="0 0 * * *"
 
-# Configure crontab based on CRON_SCHEDULE environment variable
-RUN echo "${CRON_SCHEDULE} /backup-script.sh >> /var/log/cron.log 2>&1" > /etc/crontabs/root
-
 # ----------
 # Entrypoint
 # ----------
 
-# Start the cron daemon in the foreground and follow the cron log file.
-# This CMD instruction ensures that the container keeps running and logs can be monitored.
-CMD ["sh", "-c", "crond -l 2 -f & tail -f /var/log/cron.log"]
+# Set the entrypoint script to be executed
+ENTRYPOINT ["/entrypoint.sh"]
